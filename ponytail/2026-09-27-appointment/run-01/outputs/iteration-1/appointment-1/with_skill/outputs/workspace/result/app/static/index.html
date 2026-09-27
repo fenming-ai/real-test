@@ -1,0 +1,11 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>Workshop Desk · 预约后台</title>
+<link rel="stylesheet" href="/style.css">
+<header><strong>Workshop Desk</strong><nav><a href="/">预约</a><a href="/invoices.html">发票</a></nav>
+<label>当前账号 <select id="account"><option value="north-organizer">北区组织者</option><option value="south-organizer">南区组织者</option><option value="north-viewer">北区访客</option></select></label></header>
+<main><h1>预约管理</h1><p>查看本机构的客户预约。</p><section id="filters"><div id="dates"></div>
+<label>状态 <select id="status"><option value="">全部状态</option><option value="confirmed">confirmed</option><option value="pending">pending</option><option value="cancelled">cancelled</option></select></label>
+<button id="export">导出匹配记录 CSV</button></section>
+<p id="error" role="alert"></p><p id="summary" aria-live="polite"></p>
+<table><thead><tr><th>ID</th><th>姓名</th><th>邮箱</th><th>预约时间 UTC</th><th>状态</th></tr></thead><tbody id="rows"></tbody></table>
+<footer><button id="previous">上一页</button><span id="page"></span><button id="next">下一页</button></footer></main>
+<script type="module" src="/appointments.js"></script></html>

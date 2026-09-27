@@ -1,0 +1,112 @@
+{
+  "artifact": "./run-01/outputs/iteration-1/appointment-1/without_skill/outputs/workspace/result/app",
+  "source_sha256": {
+    "auth.py": "b91c7b007e6a9f6d6ee4e9fe268cd82a011edd4acc90a74479fed71c85e3016a",
+    "exports.py": "4f13a03bc1f710b5e412cce863764246410385e4508ddde7c881d7aed6a51788",
+    "services.py": "55093ea59d29eaa41d8ce8b1e897eac81f192d2987a3c74282d290620657e3d8",
+    "query.py": "9740163dbe899781dd4f1e5185776b71bd6fb79f381371b976db58877349050b",
+    "README.md": "62a612660a7512f0689e46d5366113dea1a4c8a8bbfbdef6b8e0fee1b49f2791",
+    "app.py": "9bbbb5c89038ea894e9901c3366b629ac8b95ebae38b09accea7a81b86b31e15",
+    "data.py": "db1b09fba625a6e56e85fded02565a9909d8a8c664dd4331a9554208daeaacda",
+    "tests/test_existing.py": "d9f4f20816a02688ea2118ace920569f0dde403c6468e9ae3f194bc865b7bc51",
+    "tests/test_appointment_filters.py": "e1de3ee253c80aa0dee3801c654ea94f9c1e6ee77933b703adc23e5144550cbb",
+    "static/index.html": "a17d16ce2da0a42b7c606faf4287345a8a74b170b06ec0906e47623de8d46b80",
+    "static/appointments.js": "e528ec9eadb2a8404681c642a7cb7d2921581071a0612fae518ed8fc8de84450",
+    "static/date-range.js": "47b668cd3b8de1a091f3e0094a855b270e53204e51e09ed34fe133793ce56a05",
+    "static/invoices.js": "0d27c5bf75a10ba68b5181230e575e26dac0647d895276dc5b9feb067e5ab138",
+    "static/style.css": "08f8490ca57f093e0e88c11e2c3376517b35c3dec939e2eb807b8ca33800cc4c",
+    "static/invoices.html": "ec53a0c2a07cbafeb416a208f979395b35e7d91dc9cd2b754b8893d0c830a7bd",
+    "static/api.js": "4ea1a8f2a1786150229f4e35511ecf08254470ff38e2fb3000eb0f1f4288b41e"
+  },
+  "checks": {
+    "external_acceptance": {
+      "command": [
+        "python3",
+        "./acceptance.py",
+        "./run-01/outputs/iteration-1/appointment-1/without_skill/outputs/workspace/result/app"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_empty_filters (__main__.Acceptance.test_empty_filters) ... ok\ntest_empty_header_and_empty_list (__main__.Acceptance.test_empty_header_and_empty_list) ... ok\ntest_export_all_not_current_page (__main__.Acceptance.test_export_all_not_current_page) ... ok\ntest_filtered_paging (__main__.Acceptance.test_filtered_paging) ... ok\ntest_inclusive_midnight_and_last_second (__main__.Acceptance.test_inclusive_midnight_and_last_second) ... ok\ntest_invalid_filter_rejected (__main__.Acceptance.test_invalid_filter_rejected) ... ok\ntest_no_mutation (__main__.Acceptance.test_no_mutation) ... ok\ntest_special_characters (__main__.Acceptance.test_special_characters) ... ok\ntest_tenant_spoof_and_private_columns (__main__.Acceptance.test_tenant_spoof_and_private_columns) ... ok\ntest_viewer_denied (__main__.Acceptance.test_viewer_denied) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 0.001s\n\nOK\n"
+    },
+    "frozen_regression": {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "./seed/tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_invalid_dates (test_existing.Existing.test_invalid_dates) ... ok\ntest_invoice (test_existing.Existing.test_invoice) ... ok\ntest_list_paging (test_existing.Existing.test_list_paging) ... ok\ntest_permissions (test_existing.Existing.test_permissions) ... ok\ntest_tenant (test_existing.Existing.test_tenant) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.000s\n\nOK\n"
+    },
+    "http": {
+      "command": [
+        "python3",
+        "-c",
+        "\nimport csv, io, json, threading\nfrom http.server import ThreadingHTTPServer\nfrom urllib.request import Request, urlopen\nfrom urllib.error import HTTPError\nfrom app import Handler\nserver = ThreadingHTTPServer(('127.0.0.1', 0), Handler)\nthreading.Thread(target=server.serve_forever, daemon=True).start()\nbase = 'http://127.0.0.1:' + str(server.server_port)\ndef fetch(path, token='north-organizer'):\n    req = Request(base + path, headers={'Authorization': 'Bearer ' + token} if token else {})\n    try:\n        with urlopen(req, timeout=5) as r: return r.status, dict(r.headers), r.read().decode()\n    except HTTPError as e: return e.code, dict(e.headers), e.read().decode()\nchecks = []\ntry:\n    for path in ['/', '/appointments.js', '/date-range.js', '/api.js', '/invoices.html', '/invoices.js']:\n        assert fetch(path)[0] == 200, path\n    checks.append('HTTP static assets served (not browser execution)')\n    status, headers, body = fetch('/api/appointments/export?page=2&status=confirmed&start=2026-09-21&end=2026-09-27')\n    assert status == 200 and 'attachment' in headers['Content-Disposition']\n    rows = list(csv.reader(io.StringIO(body)))\n    assert len(rows) > 11 and all(r[4] == 'confirmed' for r in rows[1:])\n    checks.append('CSV attachment exports all matching rows, not page 2')\n    for path in ['/api/appointments?status=bad', '/api/appointments/export?start=2026-09-21']:\n        status, _, body = fetch(path)\n        assert status == 400 and json.loads(body)['error']\n    checks.append('Invalid query returns HTTP 400 and message')\n    for token in ['', 'bad-token', 'north-viewer']:\n        for path in ['/api/appointments', '/api/appointments/export']:\n            assert fetch(path, token)[0] == 403\n    checks.append('Missing/invalid/viewer authentication returns HTTP 403')\n    status, _, body = fetch('/api/appointments?tenant_id=north', 'south-organizer')\n    data = json.loads(body)\n    assert status == 200 and data['total'] == 48 and data['items'][0]['id'] == 1001\n    checks.append('HTTP tenant spoof ignored')\n    status, _, body = fetch('/api/invoices/export?start=2026-09-21&end=2026-09-27')\n    assert status == 200 and len(list(csv.reader(io.StringIO(body)))) == 2\n    checks.append('Existing invoice export HTTP regression')\n    print(json.dumps({'passed': checks}, ensure_ascii=False))\nfinally:\n    server.shutdown()\n    server.server_close()\n"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"passed\": [\"HTTP static assets served (not browser execution)\", \"CSV attachment exports all matching rows, not page 2\", \"Invalid query returns HTTP 400 and message\", \"Missing/invalid/viewer authentication returns HTTP 403\", \"HTTP tenant spoof ignored\", \"Existing invoice export HTTP regression\"]}\n",
+      "stderr": "127.0.0.1 - - [27/Sep/2026 21:03:17] \"GET / HTTP/1.1\" 200 -\n127.0.0.1 - - [27/Sep/2026 21:03:17] \"GET /appointments.js HTTP/1.1\" 200 -\n127.0.0.1 - - [27/Sep/2026 21:03:17] \"GET /date-range.js HTTP/1.1\" 200 -\n127.0.0.1 - - [27/Sep/2026 21:03:17] \"GET /api.js HTTP/1.1\" 200 -\n127.0.0.1 - - [27/Sep/2026 21:03:17] \"GET /invoices.html HTTP/1.1\" 200 -\n127.0.0.1 - - [27/Sep/2026 21:03:17] \"GET /invoices.js HTTP/1.1\" 200 -\n127.0.0.1 - - [27/Sep/2026 21:03:17] \"GET /api/appointments/export?page=2&status=confirmed&start=2026-09-21&end=2026-09-27 HTTP/1.1\" 200 -\n127.0.0.1 - - [27/Sep/2026 21:03:17] \"GET /api/appointments?status=bad HTTP/1.1\" 400 -\n127.0.0.1 - - [27/Sep/2026 21:03:17] \"GET /api/appointments/export?start=2026-09-21 HTTP/1.1\" 400 -\n127.0.0.1 - - [27/Sep/2026 21:03:17] \"GET /api/appointments HTTP/1.1\" 403 -\n127.0.0.1 - - [27/Sep/2026 21:03:17] \"GET /api/appointments/export HTTP/1.1\" 403 -\n127.0.0.1 - - [27/Sep/2026 21:03:17] \"GET /api/appointments HTTP/1.1\" 403 -\n127.0.0.1 - - [27/Sep/2026 21:03:17] \"GET /api/appointments/export HTTP/1.1\" 403 -\n127.0.0.1 - - [27/Sep/2026 21:03:17] \"GET /api/appointments HTTP/1.1\" 403 -\n127.0.0.1 - - [27/Sep/2026 21:03:17] \"GET /api/appointments/export HTTP/1.1\" 403 -\n127.0.0.1 - - [27/Sep/2026 21:03:17] \"GET /api/appointments?tenant_id=north HTTP/1.1\" 200 -\n127.0.0.1 - - [27/Sep/2026 21:03:17] \"GET /api/invoices/export?start=2026-09-21&end=2026-09-27 HTTP/1.1\" 200 -\n"
+    }
+  },
+  "changes": [
+    {
+      "path": "app.py",
+      "added": 5,
+      "removed": 2,
+      "kind": "production"
+    },
+    {
+      "path": "query.py",
+      "added": 18,
+      "removed": 4,
+      "kind": "production"
+    },
+    {
+      "path": "services.py",
+      "added": 19,
+      "removed": 3,
+      "kind": "production"
+    },
+    {
+      "path": "static/appointments.js",
+      "added": 30,
+      "removed": 4,
+      "kind": "production"
+    },
+    {
+      "path": "static/index.html",
+      "added": 6,
+      "removed": 1,
+      "kind": "production"
+    },
+    {
+      "path": "static/style.css",
+      "added": 1,
+      "removed": 1,
+      "kind": "production"
+    },
+    {
+      "path": "tests/test_appointment_filters.py",
+      "added": 107,
+      "removed": 0,
+      "kind": "test"
+    },
+    {
+      "path": "tests/test_existing.py",
+      "added": 2,
+      "removed": 2,
+      "kind": "test"
+    }
+  ],
+  "api_checks_passed": true,
+  "browser": {
+    "status": "pending",
+    "reason": "Chrome remote debugging permission pending; HTTP is not UI proof"
+  }
+}

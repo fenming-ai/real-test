@@ -1,0 +1,358 @@
+[
+  {
+    "path": "task.txt",
+    "sha256": "7ab35e279ab43ae6412a1a6074bd55b5a42f2006323aa5e34f60b548cf7cb7e1"
+  },
+  {
+    "path": "acceptance.py",
+    "sha256": "c9d80d87bd7882ca00514250cdc444b070989a0d791d331225fdd22d93f7ed75"
+  },
+  {
+    "path": "results.json",
+    "sha256": "ddfe516aba78f09567c927cf600091c2d2c636b2fb25cc024694cc6bd8a5b243"
+  },
+  {
+    "path": "seed/README.md",
+    "sha256": "62a612660a7512f0689e46d5366113dea1a4c8a8bbfbdef6b8e0fee1b49f2791"
+  },
+  {
+    "path": "seed/app.py",
+    "sha256": "ca1cd3c29c9338ff2c9b80ab6c5817f36339174fe9d28873eb58c360a58f67b6"
+  },
+  {
+    "path": "seed/auth.py",
+    "sha256": "b91c7b007e6a9f6d6ee4e9fe268cd82a011edd4acc90a74479fed71c85e3016a"
+  },
+  {
+    "path": "seed/data.py",
+    "sha256": "db1b09fba625a6e56e85fded02565a9909d8a8c664dd4331a9554208daeaacda"
+  },
+  {
+    "path": "seed/exports.py",
+    "sha256": "4f13a03bc1f710b5e412cce863764246410385e4508ddde7c881d7aed6a51788"
+  },
+  {
+    "path": "seed/query.py",
+    "sha256": "1525ba0cfb2040c1756768dc055702a3dc513330633f0d1d69cfdac17c4ded30"
+  },
+  {
+    "path": "seed/services.py",
+    "sha256": "3a6c34fae5c4ce5c1e257a3572566c5e80060a95bc29fc0365b0375a49c40164"
+  },
+  {
+    "path": "seed/static/api.js",
+    "sha256": "4ea1a8f2a1786150229f4e35511ecf08254470ff38e2fb3000eb0f1f4288b41e"
+  },
+  {
+    "path": "seed/static/appointments.js",
+    "sha256": "eda1e725f663e42d56c0bfff230e90d832135eb42ddb0bc6a716fd61ea080999"
+  },
+  {
+    "path": "seed/static/date-range.js",
+    "sha256": "47b668cd3b8de1a091f3e0094a855b270e53204e51e09ed34fe133793ce56a05"
+  },
+  {
+    "path": "seed/static/index.html",
+    "sha256": "d3be22e8589e05f66276ce186d7d0086bc2ef4e973de45c607a216b6a0451130"
+  },
+  {
+    "path": "seed/static/invoices.html",
+    "sha256": "ec53a0c2a07cbafeb416a208f979395b35e7d91dc9cd2b754b8893d0c830a7bd"
+  },
+  {
+    "path": "seed/static/invoices.js",
+    "sha256": "0d27c5bf75a10ba68b5181230e575e26dac0647d895276dc5b9feb067e5ab138"
+  },
+  {
+    "path": "seed/static/style.css",
+    "sha256": "95f538e9907d976d8552e7330104602e270a52621cb4bbbe4674478c57521531"
+  },
+  {
+    "path": "seed/tests/test_existing.py",
+    "sha256": "7b9b2b1258b4327bfc773ab07531c9fafc1a51c8597aa02fc2f114e039e91e3c"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-1/with_skill/outputs/workspace/result/app/README.md",
+    "sha256": "62a612660a7512f0689e46d5366113dea1a4c8a8bbfbdef6b8e0fee1b49f2791"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-1/with_skill/outputs/workspace/result/app/app.py",
+    "sha256": "b46dba42b78a98bf2c7918b45fdafefc9fe5fa7a8f1bc5a470884e12624bd799"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-1/with_skill/outputs/workspace/result/app/auth.py",
+    "sha256": "b91c7b007e6a9f6d6ee4e9fe268cd82a011edd4acc90a74479fed71c85e3016a"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-1/with_skill/outputs/workspace/result/app/data.py",
+    "sha256": "db1b09fba625a6e56e85fded02565a9909d8a8c664dd4331a9554208daeaacda"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-1/with_skill/outputs/workspace/result/app/exports.py",
+    "sha256": "4f13a03bc1f710b5e412cce863764246410385e4508ddde7c881d7aed6a51788"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-1/with_skill/outputs/workspace/result/app/query.py",
+    "sha256": "1525ba0cfb2040c1756768dc055702a3dc513330633f0d1d69cfdac17c4ded30"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-1/with_skill/outputs/workspace/result/app/services.py",
+    "sha256": "11004cbf3a463d241408f91c2df29f4ad80ae1698574785b591f3a488c8f0144"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-1/with_skill/outputs/workspace/result/app/static/api.js",
+    "sha256": "4ea1a8f2a1786150229f4e35511ecf08254470ff38e2fb3000eb0f1f4288b41e"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-1/with_skill/outputs/workspace/result/app/static/appointments.js",
+    "sha256": "eda7ad505d9a5234847c38f5e10199694e655a03299022bdc9b89db6021ca65a"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-1/with_skill/outputs/workspace/result/app/static/date-range.js",
+    "sha256": "47b668cd3b8de1a091f3e0094a855b270e53204e51e09ed34fe133793ce56a05"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-1/with_skill/outputs/workspace/result/app/static/index.html",
+    "sha256": "8199f23f73e2bc78cd9e49912a80dfc1b1b4259fc64d4b7ff17d2186bd8ec1e0"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-1/with_skill/outputs/workspace/result/app/static/invoices.html",
+    "sha256": "ec53a0c2a07cbafeb416a208f979395b35e7d91dc9cd2b754b8893d0c830a7bd"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-1/with_skill/outputs/workspace/result/app/static/invoices.js",
+    "sha256": "0d27c5bf75a10ba68b5181230e575e26dac0647d895276dc5b9feb067e5ab138"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-1/with_skill/outputs/workspace/result/app/static/style.css",
+    "sha256": "95f538e9907d976d8552e7330104602e270a52621cb4bbbe4674478c57521531"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-1/with_skill/outputs/workspace/result/app/tests/test_appointments_filters.py",
+    "sha256": "5aad6e3d685e5a79fdf54f07c496a50f59faae56f861b89fc6b3d46cf97d5999"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-1/with_skill/outputs/workspace/result/app/tests/test_existing.py",
+    "sha256": "7b9b2b1258b4327bfc773ab07531c9fafc1a51c8597aa02fc2f114e039e91e3c"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-1/without_skill/outputs/workspace/result/app/README.md",
+    "sha256": "62a612660a7512f0689e46d5366113dea1a4c8a8bbfbdef6b8e0fee1b49f2791"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-1/without_skill/outputs/workspace/result/app/app.py",
+    "sha256": "9bbbb5c89038ea894e9901c3366b629ac8b95ebae38b09accea7a81b86b31e15"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-1/without_skill/outputs/workspace/result/app/auth.py",
+    "sha256": "b91c7b007e6a9f6d6ee4e9fe268cd82a011edd4acc90a74479fed71c85e3016a"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-1/without_skill/outputs/workspace/result/app/data.py",
+    "sha256": "db1b09fba625a6e56e85fded02565a9909d8a8c664dd4331a9554208daeaacda"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-1/without_skill/outputs/workspace/result/app/exports.py",
+    "sha256": "4f13a03bc1f710b5e412cce863764246410385e4508ddde7c881d7aed6a51788"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-1/without_skill/outputs/workspace/result/app/query.py",
+    "sha256": "9740163dbe899781dd4f1e5185776b71bd6fb79f381371b976db58877349050b"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-1/without_skill/outputs/workspace/result/app/services.py",
+    "sha256": "55093ea59d29eaa41d8ce8b1e897eac81f192d2987a3c74282d290620657e3d8"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-1/without_skill/outputs/workspace/result/app/static/api.js",
+    "sha256": "4ea1a8f2a1786150229f4e35511ecf08254470ff38e2fb3000eb0f1f4288b41e"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-1/without_skill/outputs/workspace/result/app/static/appointments.js",
+    "sha256": "e528ec9eadb2a8404681c642a7cb7d2921581071a0612fae518ed8fc8de84450"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-1/without_skill/outputs/workspace/result/app/static/date-range.js",
+    "sha256": "47b668cd3b8de1a091f3e0094a855b270e53204e51e09ed34fe133793ce56a05"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-1/without_skill/outputs/workspace/result/app/static/index.html",
+    "sha256": "a17d16ce2da0a42b7c606faf4287345a8a74b170b06ec0906e47623de8d46b80"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-1/without_skill/outputs/workspace/result/app/static/invoices.html",
+    "sha256": "ec53a0c2a07cbafeb416a208f979395b35e7d91dc9cd2b754b8893d0c830a7bd"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-1/without_skill/outputs/workspace/result/app/static/invoices.js",
+    "sha256": "0d27c5bf75a10ba68b5181230e575e26dac0647d895276dc5b9feb067e5ab138"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-1/without_skill/outputs/workspace/result/app/static/style.css",
+    "sha256": "08f8490ca57f093e0e88c11e2c3376517b35c3dec939e2eb807b8ca33800cc4c"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-1/without_skill/outputs/workspace/result/app/tests/test_appointment_filters.py",
+    "sha256": "e1de3ee253c80aa0dee3801c654ea94f9c1e6ee77933b703adc23e5144550cbb"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-1/without_skill/outputs/workspace/result/app/tests/test_existing.py",
+    "sha256": "d9f4f20816a02688ea2118ace920569f0dde403c6468e9ae3f194bc865b7bc51"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-2/with_skill/outputs/workspace/result/app/README.md",
+    "sha256": "62a612660a7512f0689e46d5366113dea1a4c8a8bbfbdef6b8e0fee1b49f2791"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-2/with_skill/outputs/workspace/result/app/app.py",
+    "sha256": "b46dba42b78a98bf2c7918b45fdafefc9fe5fa7a8f1bc5a470884e12624bd799"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-2/with_skill/outputs/workspace/result/app/auth.py",
+    "sha256": "b91c7b007e6a9f6d6ee4e9fe268cd82a011edd4acc90a74479fed71c85e3016a"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-2/with_skill/outputs/workspace/result/app/data.py",
+    "sha256": "db1b09fba625a6e56e85fded02565a9909d8a8c664dd4331a9554208daeaacda"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-2/with_skill/outputs/workspace/result/app/exports.py",
+    "sha256": "4f13a03bc1f710b5e412cce863764246410385e4508ddde7c881d7aed6a51788"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-2/with_skill/outputs/workspace/result/app/query.py",
+    "sha256": "1525ba0cfb2040c1756768dc055702a3dc513330633f0d1d69cfdac17c4ded30"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-2/with_skill/outputs/workspace/result/app/services.py",
+    "sha256": "59067f3de73660b9ae41fd2f23cfccf0b2e1ece85ab4f6680742e9fc9fdcced0"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-2/with_skill/outputs/workspace/result/app/static/api.js",
+    "sha256": "4ea1a8f2a1786150229f4e35511ecf08254470ff38e2fb3000eb0f1f4288b41e"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-2/with_skill/outputs/workspace/result/app/static/appointments.js",
+    "sha256": "112f014e92d25f80ac14981d5d877c88901f1adda1ef9d581fe07f185c7e1790"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-2/with_skill/outputs/workspace/result/app/static/date-range.js",
+    "sha256": "47b668cd3b8de1a091f3e0094a855b270e53204e51e09ed34fe133793ce56a05"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-2/with_skill/outputs/workspace/result/app/static/index.html",
+    "sha256": "84b656b32dedc7d69aeed68931aa7f32f6c203bdca28841a53343598f13e6318"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-2/with_skill/outputs/workspace/result/app/static/invoices.html",
+    "sha256": "ec53a0c2a07cbafeb416a208f979395b35e7d91dc9cd2b754b8893d0c830a7bd"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-2/with_skill/outputs/workspace/result/app/static/invoices.js",
+    "sha256": "0d27c5bf75a10ba68b5181230e575e26dac0647d895276dc5b9feb067e5ab138"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-2/with_skill/outputs/workspace/result/app/static/style.css",
+    "sha256": "08f8490ca57f093e0e88c11e2c3376517b35c3dec939e2eb807b8ca33800cc4c"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-2/with_skill/outputs/workspace/result/app/tests/test_existing.py",
+    "sha256": "0741c6fa98b7cf7abc2e39b64ebd38138601e73284aff770e46b8592e19e7b2f"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-2/without_skill/outputs/workspace/result/app/README.md",
+    "sha256": "62a612660a7512f0689e46d5366113dea1a4c8a8bbfbdef6b8e0fee1b49f2791"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-2/without_skill/outputs/workspace/result/app/app.py",
+    "sha256": "b46dba42b78a98bf2c7918b45fdafefc9fe5fa7a8f1bc5a470884e12624bd799"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-2/without_skill/outputs/workspace/result/app/auth.py",
+    "sha256": "b91c7b007e6a9f6d6ee4e9fe268cd82a011edd4acc90a74479fed71c85e3016a"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-2/without_skill/outputs/workspace/result/app/data.py",
+    "sha256": "db1b09fba625a6e56e85fded02565a9909d8a8c664dd4331a9554208daeaacda"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-2/without_skill/outputs/workspace/result/app/exports.py",
+    "sha256": "4f13a03bc1f710b5e412cce863764246410385e4508ddde7c881d7aed6a51788"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-2/without_skill/outputs/workspace/result/app/query.py",
+    "sha256": "1525ba0cfb2040c1756768dc055702a3dc513330633f0d1d69cfdac17c4ded30"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-2/without_skill/outputs/workspace/result/app/services.py",
+    "sha256": "9512492172a3a9a4d2e206936f23478c6e3bbcd94fb373015310e8c18132f867"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-2/without_skill/outputs/workspace/result/app/static/api.js",
+    "sha256": "4ea1a8f2a1786150229f4e35511ecf08254470ff38e2fb3000eb0f1f4288b41e"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-2/without_skill/outputs/workspace/result/app/static/appointments.js",
+    "sha256": "cd0c665c6a7847c55759fa63ed73b4c9700055986d26f2627ad2e3a100cdcdd8"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-2/without_skill/outputs/workspace/result/app/static/date-range.js",
+    "sha256": "47b668cd3b8de1a091f3e0094a855b270e53204e51e09ed34fe133793ce56a05"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-2/without_skill/outputs/workspace/result/app/static/index.html",
+    "sha256": "61ab94884a052d39801a2174218e7910e8cec3271d4446eec385dda3d8a3c7f4"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-2/without_skill/outputs/workspace/result/app/static/invoices.html",
+    "sha256": "ec53a0c2a07cbafeb416a208f979395b35e7d91dc9cd2b754b8893d0c830a7bd"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-2/without_skill/outputs/workspace/result/app/static/invoices.js",
+    "sha256": "0d27c5bf75a10ba68b5181230e575e26dac0647d895276dc5b9feb067e5ab138"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-2/without_skill/outputs/workspace/result/app/static/style.css",
+    "sha256": "08f8490ca57f093e0e88c11e2c3376517b35c3dec939e2eb807b8ca33800cc4c"
+  },
+  {
+    "path": "run-01/outputs/iteration-1/appointment-2/without_skill/outputs/workspace/result/app/tests/test_existing.py",
+    "sha256": "eacffb7cab34df72486f9208d41c96dcfa25739a3ec5aeb62cc26160d9c6cd35"
+  },
+  {
+    "path": "checks/appointment-1-with_skill/changes.diff",
+    "sha256": "fa21c49b07fad925d04948c71fcb0589319b7527e99354fbb6aef9c0e1912753"
+  },
+  {
+    "path": "checks/appointment-1-with_skill/results.json",
+    "sha256": "05c5ef6ab649dc9e5463b38eb5323d3b9d8f7fb1a66c6cb2572dc9bdcc593646",
+    "redaction": "local root and Python executable paths only"
+  },
+  {
+    "path": "checks/appointment-1-without_skill/changes.diff",
+    "sha256": "731837f89b14c2ebfbae40090a599792ae970cb0472305778a3c2f78b6f7fdcd"
+  },
+  {
+    "path": "checks/appointment-1-without_skill/results.json",
+    "sha256": "d5a11ddd5a922d568da4a27394e9ee965d723d64cd3b8693c6758270c1cfeda6",
+    "redaction": "local root and Python executable paths only"
+  },
+  {
+    "path": "checks/appointment-2-with_skill/changes.diff",
+    "sha256": "d028a44a0769e9bbd9789468372fd1540215081736661303cedee1553bb5a3bd"
+  },
+  {
+    "path": "checks/appointment-2-with_skill/results.json",
+    "sha256": "8ba7550d7f1efca7fbb2a6ba15b2a53925a46760060944defbead170fe95d3f5",
+    "redaction": "local root and Python executable paths only"
+  },
+  {
+    "path": "checks/appointment-2-without_skill/changes.diff",
+    "sha256": "fff024dad8e65c54d69938e2d62f923cd0431bbab54ba27b89d9a108fd0af15a"
+  },
+  {
+    "path": "checks/appointment-2-without_skill/results.json",
+    "sha256": "05fef165acce8786887dd4bfe502dd7d261e51a6e87f141d6e279c7734c3d88c",
+    "redaction": "local root and Python executable paths only"
+  }
+]

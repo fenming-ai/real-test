@@ -1,0 +1,316 @@
+--- seed/app.py
++++ result/app.py
+@@ -7,7 +7,7 @@
+ 
+ from auth import authenticate
+ from data import TODAY
+-from services import export_invoices, list_appointments
++from services import export_appointments, export_invoices, list_appointments
+ 
+ STATIC = Path(__file__).parent / "static"
+ 
+@@ -17,6 +17,8 @@
+         return "application/json", json.dumps({**actor, "today": TODAY.isoformat()})
+     if path == "/api/appointments":
+         return "application/json", json.dumps(list_appointments(actor, params), ensure_ascii=False)
++    if path == "/api/appointments/export":
++        return "text/csv", export_appointments(actor, params)
+     if path == "/api/invoices/export":
+         return "text/csv", export_invoices(actor, params)
+     raise FileNotFoundError(path)
+@@ -28,7 +30,8 @@
+         try:
+             if url.path.startswith("/api/"):
+                 actor = authenticate(self.headers)
+-                kind, text = dispatch(url.path, dict(parse_qsl(url.query)), actor)
++                params = dict(parse_qsl(url.query, keep_blank_values=True))
++                kind, text = dispatch(url.path, params, actor)
+                 body = text.encode("utf-8")
+             else:
+                 relative = "index.html" if url.path == "/" else url.path.removeprefix("/")
+--- seed/query.py
++++ result/query.py
+@@ -1,18 +1,32 @@
+ from datetime import date
++
++
++APPOINTMENT_STATUSES = ("confirmed", "pending", "cancelled")
+ 
+ 
+ def date_window(params, start_key="start", end_key="end"):
+     start, end = params.get(start_key, ""), params.get(end_key, "")
+     if bool(start) != bool(end):
+-        raise ValueError("Start and end dates must be supplied together")
++        raise ValueError("开始日期和结束日期必须同时填写")
+     if not start:
+         return None, None
+     for value in (start, end):
+-        if len(value) != 10 or date.fromisoformat(value).isoformat() != value:
+-            raise ValueError("Use YYYY-MM-DD dates")
++        try:
++            valid = len(value) == 10 and date.fromisoformat(value).isoformat() == value
++        except (TypeError, ValueError):
++            valid = False
++        if not valid:
++            raise ValueError("日期格式必须为 YYYY-MM-DD")
+     if start > end:
+-        raise ValueError("Start date must not be after end date")
++        raise ValueError("开始日期不能晚于结束日期")
+     return start, end
++
++
++def appointment_status(params):
++    status = params.get("status", "")
++    if status and status not in APPOINTMENT_STATUSES:
++        raise ValueError(f"未知预约状态：{status}")
++    return status
+ 
+ 
+ def in_window(timestamp, start, end):
+--- seed/services.py
++++ result/services.py
+@@ -1,17 +1,33 @@
+ from auth import require_organizer
+ from data import APPOINTMENTS, INVOICES
+ from exports import render_csv
+-from query import date_window, in_window, paginate, tenant_rows
++from query import appointment_status, date_window, in_window, paginate, tenant_rows
+ 
+ PUBLIC_FIELDS = ("id", "name", "email", "starts_at", "status")
+ 
+ 
++def matching_appointments(actor, params):
++    require_organizer(actor)
++    start, end = date_window(params)
++    status = appointment_status(params)
++    return sorted(
++        (row for row in tenant_rows(APPOINTMENTS, actor)
++         if in_window(row["starts_at"], start, end)
++         and (not status or row["status"] == status)),
++        key=lambda row: row["id"],
++    )
++
++
+ def list_appointments(actor, params):
+-    require_organizer(actor)
+-    rows = sorted(tenant_rows(APPOINTMENTS, actor), key=lambda row: row["id"])
++    rows = matching_appointments(actor, params)
+     page = paginate(rows, params)
+     page["items"] = [{key: row[key] for key in PUBLIC_FIELDS} for row in page["items"]]
+     return page
++
++
++def export_appointments(actor, params):
++    rows = matching_appointments(actor, params)
++    return render_csv(rows, PUBLIC_FIELDS)
+ 
+ 
+ def export_invoices(actor, params):
+--- seed/static/appointments.js
++++ result/static/appointments.js
+@@ -1,12 +1,29 @@
+-import { account, request } from './api.js';
++import { account, downloadCsv, request } from './api.js';
++import { mountDateRange } from './date-range.js';
++
+ let page = 1;
+ const picker = document.querySelector('#account');
++const errorMessage = document.querySelector('#error');
++const status = document.querySelector('#status');
+ picker.value = account();
++
++const session = await (await request('/api/session')).json();
++const dates = mountDateRange(document.querySelector('#dates'), session.today, filtersChanged);
++
++function filters() {
++  return { ...dates.values(), status: status.value };
++}
++
++function filtersChanged() {
++  page = 1;
++  load();
++}
++
+ async function load() {
+-  document.querySelector('#error').textContent = '';
++  errorMessage.textContent = '';
+   document.querySelector('#rows').replaceChildren();
+   try {
+-    const data = await (await request('/api/appointments', { page })).json();
++    const data = await (await request('/api/appointments', { ...filters(), page })).json();
+     for (const row of data.items) {
+       const tr = document.createElement('tr');
+       for (const key of ['id', 'name', 'email', 'starts_at', 'status']) {
+@@ -19,11 +36,20 @@
+     document.querySelector('#previous').disabled = page === 1;
+     document.querySelector('#next').disabled = page * data.page_size >= data.total;
+   } catch (error) {
+-    document.querySelector('#error').textContent = error.message;
++    errorMessage.textContent = error.message;
+     document.querySelector('#summary').textContent = '';
++    document.querySelector('#page').textContent = '';
++    document.querySelector('#previous').disabled = true;
++    document.querySelector('#next').disabled = true;
+   }
+ }
+ picker.onchange = () => { sessionStorage.setItem('account', picker.value); page = 1; load(); };
++status.onchange = filtersChanged;
++document.querySelector('#export').onclick = async () => {
++  errorMessage.textContent = '';
++  try { await downloadCsv('/api/appointments/export', filters(), 'appointments.csv'); }
++  catch (error) { errorMessage.textContent = error.message; }
++};
+ document.querySelector('#previous').onclick = () => { page--; load(); };
+ document.querySelector('#next').onclick = () => { page++; load(); };
+ load();
+--- seed/static/index.html
++++ result/static/index.html
+@@ -2,7 +2,12 @@
+ <link rel="stylesheet" href="/style.css">
+ <header><strong>Workshop Desk</strong><nav><a href="/">预约</a><a href="/invoices.html">发票</a></nav>
+ <label>当前账号 <select id="account"><option value="north-organizer">北区组织者</option><option value="south-organizer">南区组织者</option><option value="north-viewer">北区访客</option></select></label></header>
+-<main><h1>预约管理</h1><p>查看本机构的客户预约。</p><section id="filters"></section>
++<main><h1>预约管理</h1><p>查看本机构的客户预约。</p>
++<section id="filters" aria-label="预约筛选">
++  <div id="dates"></div>
++  <label>状态 <select id="status"><option value="">全部状态</option><option value="confirmed">confirmed</option><option value="pending">pending</option><option value="cancelled">cancelled</option></select></label>
++  <button id="export" type="button">导出全部匹配 CSV</button>
++</section>
+ <p id="error" role="alert"></p><p id="summary" aria-live="polite"></p>
+ <table><thead><tr><th>ID</th><th>姓名</th><th>邮箱</th><th>预约时间 UTC</th><th>状态</th></tr></thead><tbody id="rows"></tbody></table>
+ <footer><button id="previous">上一页</button><span id="page"></span><button id="next">下一页</button></footer></main>
+--- seed/static/style.css
++++ result/static/style.css
+@@ -1 +1 @@
+-*{box-sizing:border-box}body{margin:0;background:#f2f5fa;color:#172435;font:15px system-ui}header{display:flex;align-items:center;gap:32px;padding:22px 4%;background:#fff;border-bottom:1px solid #dbe2ec}header label{margin-left:auto}nav{display:flex;gap:18px}a{color:#2a5ab1}main{max-width:1100px;margin:36px auto;padding:28px;background:#fff;border:1px solid #dae2ee;border-radius:12px}h1{margin-top:0}table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:13px;border-bottom:1px solid #e6eaf0;white-space:pre-wrap}th{background:#f5f8fc}button,select,input{padding:8px 12px;border:1px solid #bac7da;border-radius:5px;background:#fff;font:inherit}button{cursor:pointer}button:disabled{opacity:.4;cursor:default}footer{display:flex;gap:18px;align-items:center;margin-top:22px}#filters{display:flex;gap:12px;flex-wrap:wrap;margin:22px 0}#error{color:#ab2038}label{display:inline-flex;gap:7px;align-items:center}
++*{box-sizing:border-box}body{margin:0;background:#f2f5fa;color:#172435;font:15px system-ui}header{display:flex;align-items:center;gap:32px;padding:22px 4%;background:#fff;border-bottom:1px solid #dbe2ec}header label{margin-left:auto}nav{display:flex;gap:18px}a{color:#2a5ab1}main{max-width:1100px;margin:36px auto;padding:28px;background:#fff;border:1px solid #dae2ee;border-radius:12px}h1{margin-top:0}table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:13px;border-bottom:1px solid #e6eaf0;white-space:pre-wrap}th{background:#f5f8fc}button,select,input{padding:8px 12px;border:1px solid #bac7da;border-radius:5px;background:#fff;font:inherit}button{cursor:pointer}button:disabled{opacity:.4;cursor:default}footer{display:flex;gap:18px;align-items:center;margin-top:22px}#filters,#dates{display:flex;gap:12px;flex-wrap:wrap;align-items:center}#filters{margin:22px 0}#error{color:#ab2038}label{display:inline-flex;gap:7px;align-items:center}
+--- seed/tests/test_appointment_filters.py
++++ result/tests/test_appointment_filters.py
+@@ -0,0 +1,107 @@
++import csv
++import io
++import unittest
++
++from app import dispatch
++from services import export_appointments, list_appointments
++
++
++NORTH = {"tenant_id": "north", "role": "organizer"}
++SOUTH = {"tenant_id": "south", "role": "organizer"}
++
++
++class AppointmentFilters(unittest.TestCase):
++    def test_date_range_is_inclusive_and_uses_utc_dates(self):
++        result = list_appointments(NORTH, {
++            "start": "2026-09-21", "end": "2026-09-27",
++        })
++        self.assertEqual(result["total"], 30)
++
++        exported = list(csv.DictReader(io.StringIO(export_appointments(NORTH, {
++            "start": "2026-09-21", "end": "2026-09-27",
++        }))))
++        self.assertEqual(len(exported), 30)
++        exported_ids = {int(row["id"]) for row in exported}
++        self.assertIn(101, exported_ids)
++        self.assertIn(102, exported_ids)
++        self.assertNotIn(103, exported_ids)
++        self.assertNotIn(104, exported_ids)
++
++    def test_status_combines_with_date_range_and_paginates(self):
++        params = {
++            "start": "2026-09-21", "end": "2026-09-27",
++            "status": "confirmed",
++        }
++        first = list_appointments(NORTH, params)
++        second = list_appointments(NORTH, {**params, "page": "2"})
++        self.assertEqual(first["total"], 14)
++        self.assertEqual(len(first["items"]), 10)
++        self.assertEqual(len(second["items"]), 4)
++        self.assertTrue(all(row["status"] == "confirmed"
++                            for row in first["items"] + second["items"]))
++
++    def test_empty_filters_mean_all_records(self):
++        self.assertEqual(list_appointments(NORTH, {
++            "start": "", "end": "", "status": "",
++        })["total"], 52)
++
++    def test_invalid_filters_are_rejected(self):
++        invalid = (
++            {"start": "2026-09-21", "end": ""},
++            {"start": "", "end": "2026-09-27"},
++            {"start": "2026-02-30", "end": "2026-09-27"},
++            {"start": "2026-09-28", "end": "2026-09-27"},
++            {"status": "unknown"},
++        )
++        for params in invalid:
++            with self.subTest(params=params), self.assertRaises(ValueError):
++                list_appointments(NORTH, params)
++            with self.subTest(params=params), self.assertRaises(ValueError):
++                export_appointments(NORTH, params)
++
++    def test_export_has_fixed_columns_all_rows_and_correct_csv_escaping(self):
++        text = export_appointments(NORTH, {
++            "start": "2026-09-21", "end": "2026-09-21",
++            "status": "confirmed", "page": "999", "tenant_id": "south",
++        })
++        rows = list(csv.DictReader(io.StringIO(text)))
++        self.assertEqual(len(rows), 5)
++        escaped = next(row for row in rows if row["id"] == "101")
++        self.assertEqual(escaped["name"], '张, "小明"\n同学')
++        self.assertEqual(escaped["email"], 'x,"y"\n@example.test')
++        self.assertEqual(list(escaped), ["id", "name", "email", "starts_at", "status"])
++        self.assertNotIn("tenant_id", text)
++        self.assertNotIn("private_note", text)
++        self.assertNotIn("INTERNAL_DO_NOT_EXPORT", text)
++
++    def test_empty_export_keeps_header(self):
++        text = export_appointments(SOUTH, {
++            "start": "2025-01-01", "end": "2025-01-01",
++        })
++        self.assertEqual(text, "id,name,email,starts_at,status\r\n")
++
++    def test_client_tenant_parameter_cannot_cross_tenant(self):
++        listed = list_appointments(NORTH, {"tenant_id": "south"})
++        self.assertEqual(listed["total"], 52)
++        self.assertTrue(all(row["id"] < 1000 for row in listed["items"]))
++
++        text = export_appointments(NORTH, {"tenant_id": "south"})
++        rows = list(csv.DictReader(io.StringIO(text)))
++        self.assertEqual(len(rows), 52)
++        self.assertTrue(all(int(row["id"]) < 1000 for row in rows))
++
++    def test_api_routes_use_the_same_filters(self):
++        params = {
++            "start": "2026-09-21", "end": "2026-09-27",
++            "status": "cancelled", "page": "2",
++        }
++        list_kind, list_text = dispatch("/api/appointments", params, NORTH)
++        export_kind, export_text = dispatch("/api/appointments/export", params, NORTH)
++        self.assertEqual(list_kind, "application/json")
++        self.assertEqual(export_kind, "text/csv")
++        self.assertIn('"total": 8', list_text)
++        self.assertEqual(len(list(csv.DictReader(io.StringIO(export_text)))), 8)
++
++
++if __name__ == "__main__":
++    unittest.main()
+--- seed/tests/test_existing.py
++++ result/tests/test_existing.py
+@@ -1,7 +1,7 @@
+ import csv
+ import io
+ import unittest
+-from services import export_invoices, list_appointments
++from services import export_appointments, export_invoices, list_appointments
+ 
+ NORTH = {"tenant_id": "north", "role": "organizer"}
+ 
+@@ -22,7 +22,7 @@
+         self.assertEqual(result['items'][0]['id'], 1001)
+ 
+     def test_permissions(self):
+-        for function in (list_appointments, export_invoices):
++        for function in (list_appointments, export_appointments, export_invoices):
+             with self.assertRaises(PermissionError):
+                 function({"tenant_id": "north", "role": "viewer"}, {})
+ 

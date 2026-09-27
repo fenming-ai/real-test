@@ -1,0 +1,313 @@
+{
+  "requested_model": "gpt-5.6-sol",
+  "effort": "medium",
+  "service_tier": "priority",
+  "rows": [
+    {
+      "id": "appointment-1-with_skill",
+      "group": "with_skill",
+      "status": "PASS",
+      "duration_ms": 126673,
+      "cli_completed_turns": 1,
+      "cli_usage": {
+        "input_tokens": 347396,
+        "cached_input_tokens": 310016,
+        "output_tokens": 7923,
+        "reasoning_output_tokens": 2301
+      },
+      "skill_up_usage": {
+        "input_tokens": 657412,
+        "output_tokens": 7923,
+        "turns": 1
+      },
+      "actual_skill_read": true,
+      "api_checks_passed": true,
+      "browser": {
+        "status": "pending",
+        "reason": "Chrome remote debugging permission pending; HTTP is not UI proof"
+      },
+      "production_added": 39,
+      "production_removed": 7,
+      "production_files": 4,
+      "test_added": 79,
+      "test_removed": 0,
+      "changes": [
+        {
+          "path": "app.py",
+          "added": 3,
+          "removed": 1,
+          "kind": "production"
+        },
+        {
+          "path": "services.py",
+          "added": 19,
+          "removed": 3,
+          "kind": "production"
+        },
+        {
+          "path": "static/appointments.js",
+          "added": 14,
+          "removed": 2,
+          "kind": "production"
+        },
+        {
+          "path": "static/index.html",
+          "added": 3,
+          "removed": 1,
+          "kind": "production"
+        },
+        {
+          "path": "tests/test_appointments_filters.py",
+          "added": 79,
+          "removed": 0,
+          "kind": "test"
+        }
+      ]
+    },
+    {
+      "id": "appointment-1-without_skill",
+      "group": "without_skill",
+      "status": "PASS",
+      "duration_ms": 249835,
+      "cli_completed_turns": 1,
+      "cli_usage": {
+        "input_tokens": 516658,
+        "cached_input_tokens": 471808,
+        "output_tokens": 15923,
+        "reasoning_output_tokens": 2779
+      },
+      "skill_up_usage": {
+        "input_tokens": 988466,
+        "output_tokens": 15923,
+        "turns": 1
+      },
+      "actual_skill_read": false,
+      "api_checks_passed": true,
+      "browser": {
+        "status": "pending",
+        "reason": "Chrome remote debugging permission pending; HTTP is not UI proof"
+      },
+      "production_added": 79,
+      "production_removed": 15,
+      "production_files": 6,
+      "test_added": 109,
+      "test_removed": 2,
+      "changes": [
+        {
+          "path": "app.py",
+          "added": 5,
+          "removed": 2,
+          "kind": "production"
+        },
+        {
+          "path": "query.py",
+          "added": 18,
+          "removed": 4,
+          "kind": "production"
+        },
+        {
+          "path": "services.py",
+          "added": 19,
+          "removed": 3,
+          "kind": "production"
+        },
+        {
+          "path": "static/appointments.js",
+          "added": 30,
+          "removed": 4,
+          "kind": "production"
+        },
+        {
+          "path": "static/index.html",
+          "added": 6,
+          "removed": 1,
+          "kind": "production"
+        },
+        {
+          "path": "static/style.css",
+          "added": 1,
+          "removed": 1,
+          "kind": "production"
+        },
+        {
+          "path": "tests/test_appointment_filters.py",
+          "added": 107,
+          "removed": 0,
+          "kind": "test"
+        },
+        {
+          "path": "tests/test_existing.py",
+          "added": 2,
+          "removed": 2,
+          "kind": "test"
+        }
+      ]
+    },
+    {
+      "id": "appointment-2-with_skill",
+      "group": "with_skill",
+      "status": "PASS",
+      "duration_ms": 188261,
+      "cli_completed_turns": 1,
+      "cli_usage": {
+        "input_tokens": 510042,
+        "cached_input_tokens": 474496,
+        "output_tokens": 12411,
+        "reasoning_output_tokens": 3150
+      },
+      "skill_up_usage": {
+        "input_tokens": 984538,
+        "output_tokens": 12411,
+        "turns": 1
+      },
+      "actual_skill_read": true,
+      "api_checks_passed": true,
+      "browser": {
+        "status": "pending",
+        "reason": "Chrome remote debugging permission pending; HTTP is not UI proof"
+      },
+      "production_added": 38,
+      "production_removed": 7,
+      "production_files": 5,
+      "test_added": 61,
+      "test_removed": 2,
+      "changes": [
+        {
+          "path": "app.py",
+          "added": 3,
+          "removed": 1,
+          "kind": "production"
+        },
+        {
+          "path": "services.py",
+          "added": 17,
+          "removed": 2,
+          "kind": "production"
+        },
+        {
+          "path": "static/appointments.js",
+          "added": 14,
+          "removed": 2,
+          "kind": "production"
+        },
+        {
+          "path": "static/index.html",
+          "added": 3,
+          "removed": 1,
+          "kind": "production"
+        },
+        {
+          "path": "static/style.css",
+          "added": 1,
+          "removed": 1,
+          "kind": "production"
+        },
+        {
+          "path": "tests/test_existing.py",
+          "added": 61,
+          "removed": 2,
+          "kind": "test"
+        }
+      ]
+    },
+    {
+      "id": "appointment-2-without_skill",
+      "group": "without_skill",
+      "status": "PASS",
+      "duration_ms": 184015,
+      "cli_completed_turns": 1,
+      "cli_usage": {
+        "input_tokens": 512922,
+        "cached_input_tokens": 470784,
+        "output_tokens": 11297,
+        "reasoning_output_tokens": 2064
+      },
+      "skill_up_usage": {
+        "input_tokens": 983706,
+        "output_tokens": 11297,
+        "turns": 1
+      },
+      "actual_skill_read": false,
+      "api_checks_passed": true,
+      "browser": {
+        "status": "pending",
+        "reason": "Chrome remote debugging permission pending; HTTP is not UI proof"
+      },
+      "production_added": 48,
+      "production_removed": 7,
+      "production_files": 5,
+      "test_added": 73,
+      "test_removed": 2,
+      "changes": [
+        {
+          "path": "app.py",
+          "added": 3,
+          "removed": 1,
+          "kind": "production"
+        },
+        {
+          "path": "services.py",
+          "added": 18,
+          "removed": 2,
+          "kind": "production"
+        },
+        {
+          "path": "static/appointments.js",
+          "added": 22,
+          "removed": 2,
+          "kind": "production"
+        },
+        {
+          "path": "static/index.html",
+          "added": 4,
+          "removed": 1,
+          "kind": "production"
+        },
+        {
+          "path": "static/style.css",
+          "added": 1,
+          "removed": 1,
+          "kind": "production"
+        },
+        {
+          "path": "tests/test_existing.py",
+          "added": 73,
+          "removed": 2,
+          "kind": "test"
+        }
+      ]
+    }
+  ],
+  "means": {
+    "without_skill": {
+      "duration_ms": 216925,
+      "production_added": 63.5,
+      "production_removed": 11,
+      "production_files": 5.5,
+      "test_added": 91,
+      "test_removed": 2,
+      "cli_usage": {
+        "input_tokens": 514790,
+        "cached_input_tokens": 471296,
+        "output_tokens": 13610,
+        "reasoning_output_tokens": 2421.5
+      }
+    },
+    "with_skill": {
+      "duration_ms": 157467,
+      "production_added": 38.5,
+      "production_removed": 7,
+      "production_files": 4.5,
+      "test_added": 70,
+      "test_removed": 1,
+      "cli_usage": {
+        "input_tokens": 428719,
+        "cached_input_tokens": 392256,
+        "output_tokens": 10167,
+        "reasoning_output_tokens": 2725.5
+      }
+    }
+  },
+  "usage_policy": "CLI turn.completed usage is the comparison basis; skill-up report counters retained separately, not mixed. Input includes cached tokens, reasoning output is not added twice. Cost unknown.",
+  "scope": "Two repeats per group, synthetic project, no statistical significance or general performance claim."
+}
