@@ -1,0 +1,1 @@
+这是一次隔离的前端生成测试。先完整读取并遵守当前目录 skill/SKILL.md，把它作为本次唯一的设计 Skill；再读取 brief.md，根据它从零创建 index.html。完成后执行 Skill 要求中与本任务适用的 pre-flight，并检查文件能直接打开、内容完整、没有外部依赖；不要修改 brief.md、hero.jpg 或 skill/SKILL.md。

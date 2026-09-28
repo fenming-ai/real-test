@@ -4,6 +4,7 @@
 
 ## 实测目录
 
+- [Taste：同一份 Fieldnote 落地页需求，两版原始页面](taste/2026-09-25-fieldnote/README.md) · [在线对比](https://fenming-ai.github.io/real-test/taste/)
 - [Ponytail：预约后台筛选与导出](ponytail/2026-09-27-appointment/README.md)
 
 目录约定：`测试对象/YYYY-MM-DD-案例名/`。不同模型或重测放在案例下的独立运行目录，并记录模型、条件和时间。

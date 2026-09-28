@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Taste 实测：同一份需求，两版页面</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f4f6f2;color:#18392f;font:17px/1.7 system-ui,sans-serif}main{max-width:1280px;margin:48px auto;padding:0 24px}h1{font-size:clamp(30px,4vw,48px);line-height:1.2}a{color:#00694f;text-underline-offset:4px}a:focus-visible{outline:3px solid #b05122;outline-offset:5px}.comparison{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin:28px 0}figure{margin:0;padding:22px;background:white;border:1px solid #ccd8ce;border-radius:12px}figure img{display:block;width:100%;height:auto;margin:18px 0;border:1px solid #ddd}figcaption{font-weight:700;font-size:23px}blockquote{border-left:4px solid #008367;padding:8px 22px;margin:24px 0;font-size:24px}.note{color:#4c6057}footer{border-top:1px solid #ccd8ce;padding-top:20px;font-size:14px}@media(max-width:750px){.comparison{grid-template-columns:1fr}}
+</style>
+<main>
+<p>REAL TEST · 2026-09-25 · Taste / Fieldnote</p>
+<h1>同一份需求，两版页面差在哪？</h1>
+<p>同一模型、需求、图片和设置，各生成一次。这里保留完整原始页面，不是重画的演示图。</p>
+<blockquote>我觉得就是好看，舒服，这感觉骗不了人。</blockquote>
+<p>这是图文作者对 Taste 版的个人判断；这次选 B，不代表每次都更好。</p>
+<div class="comparison">
+<figure><figcaption>A · 不用 Taste</figcaption><a href="baseline/">打开完整原始页面 →</a><img src="baseline/screenshots/top.png" alt="不用 Taste 的原始首屏：衬线标题、橘色按钮与倾斜照片"><p>衬线标题、橘色按钮、照片编号，编辑感更强。</p><a href="baseline/screenshots/middle.png">中段截图</a> · <a href="baseline/screenshots/bottom.png">底部截图</a></figure>
+<figure><figcaption>B · 使用 Taste</figcaption><a href="with-taste/">打开完整原始页面 →</a><img src="with-taste/screenshots/top.png" alt="使用 Taste 的原始首屏：无衬线标题、森林绿按钮与方正照片"><p>无衬线字体、森林绿、克制留白，视觉更统一。</p><a href="with-taste/screenshots/middle.png">中段截图</a> · <a href="with-taste/screenshots/bottom.png">底部截图</a></figure>
+</div>
+<h2>这次怎么测的</h2>
+<p>Codex CLI 0.153.4 · gpt-6-astra · reasoning effort none。两个隔离工作目录，固定相同 Brief 和照片；Taste 组额外读取固定版本设计规则。各跑一次，测试显式注入，不测试自动触发。</p>
+<p>两页当时均通过桌面功能检查。本次归档没有重跑模型或改写原始 HTML。AI 匿名评审偏好基线的产品气质，图文作者更喜欢 Taste 的视觉，两种判断分别保留。</p>
+<p class="note">Fieldnote 是合成测试产品，没有真实安装包。页面按钮只打开说明窗口。没有手机端、重复运行或真实转化验证。</p>
+<p><a href="brief.md">相同需求 Brief</a> · <a href="https://github.com/fenming-ai/real-test/tree/main/taste/2026-09-25-fieldnote">完整测试条件、指标与源文件</a> · <a href="verification.json">归档回归记录</a></p>
+<footer>照片：<a href="https://unsplash.com/photos/sLraJyotfeY">Jordan Sanchez / Unsplash</a>（Picsum #786）；按 <a href="https://unsplash.com/license">Unsplash License</a> 使用。<br>Taste 固定版本：<a href="https://github.com/Leonxlnx/taste-skill/tree/c184364c58658b2f131b4ae8bd3d206cabb3deee">c184364 · v2 experimental</a>。本页不是官方效果承诺。</footer>
+</main></html>

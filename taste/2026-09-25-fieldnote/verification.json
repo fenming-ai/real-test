@@ -1,0 +1,37 @@
+{
+  "date": "2026-09-28T22:25:08.925Z",
+  "kind": "archive-desktop-regression",
+  "model_rerun": false,
+  "browser": "149.0.7827.55",
+  "viewport": [
+    1512,
+    717
+  ],
+  "pages": {
+    "baseline": {
+      "images": true,
+      "no_overflow": true,
+      "h1": 1,
+      "sections": 4,
+      "title": "Keep the source close.",
+      "dialog_open_close": true,
+      "remote_requests": [],
+      "page_errors": [],
+      "focus_and_reduced_motion_source": true,
+      "html_sha256": "1b9f947815ed1a8b60c01dbd26673610eafe73be736ecc5f9ab212adf37d7cf4"
+    },
+    "with-taste": {
+      "images": true,
+      "no_overflow": true,
+      "h1": 1,
+      "sections": 4,
+      "title": "Keep the source close.",
+      "dialog_open_close": true,
+      "remote_requests": [],
+      "page_errors": [],
+      "focus_and_reduced_motion_source": true,
+      "html_sha256": "e5d291f8bf4b50f322572714328a6bdd002ddb63934582979a93d7b71f7aaa59"
+    }
+  },
+  "comparison_images_and_local_links": true
+}
